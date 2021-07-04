@@ -17,6 +17,8 @@
             Value = value;
             PrevNode = prev;
             NextNode = prev.NextNode;
+
+            prev.NextNode.PrevNode = this;
             prev.NextNode = this;
 		}
     }
