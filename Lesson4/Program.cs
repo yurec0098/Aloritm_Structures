@@ -17,6 +17,12 @@ namespace Lesson4
 			var node2 = node.GetNodeByValue(25);
 			var node3 = node.GetNodeByValue(35);
 			var node4 = node.GetNodeByValue(45);
+
+			//Console.WriteLine(string.Join(", ", TreeHelper.GetTreeInLine(node).Select(x => x.Node.Value)));
+
+			Console.WriteLine();
+			node.PrintNode_BFS();
+			node.PrintNode_DFS();
 		}
 
 		static void TestSearchTime()
@@ -162,6 +168,49 @@ namespace Lesson4
 				PrintNode(node.RightChild, $"{separator}  ");
 			}
 		}
+
+
+		public void PrintNode_DFS()
+		{
+			var result = new List<int>();
+			var stack = new Stack<TreeNode>();
+			stack.Push(this);
+
+			while (stack.Count > 0)
+			{
+				var item = stack.Pop();
+				result.Add(item.Value);
+
+				if (item.LeftChild != null)
+					stack.Push(item.LeftChild);
+				if (item.RightChild != null)
+					stack.Push(item.RightChild);
+			}
+
+			Console.Write("DFS: ");
+			Console.WriteLine(string.Join(", ", result));
+		}
+		public void PrintNode_BFS()
+		{
+			var result = new List<int>();
+			var queue = new Queue<TreeNode>();
+			queue.Enqueue(this);
+
+			while (queue.Count > 0)
+			{
+				var item = queue.Dequeue();
+				result.Add(item.Value);
+
+				if (item.LeftChild != null)
+					queue.Enqueue(item.LeftChild);
+				if (item.RightChild != null)
+					queue.Enqueue(item.RightChild);
+			}
+
+			Console.Write("BFS: ");
+			Console.WriteLine(string.Join(", ", result));
+		}
+
 
 		static Random random = new Random();
 		public static TreeNode BuildTree(int n)
